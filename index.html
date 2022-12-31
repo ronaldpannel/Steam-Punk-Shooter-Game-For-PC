@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Steam Punk Shooter Game</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="scoreBar">
+        <h1 class="scoreLabel" id="scoreLabel">
+          Score <span class="score" id="score">0</span>
+        </h1>
+        <h1 class="health" id="health">
+          Player Health <span class="HealthScore" id="healthScore">6</span>
+        </h1>
+        <h1 class="highScoreLabel" id="highScoreLabel">
+          Highest Score <span class="highSxore" id="highScore">0</span>
+        </h1>
+      </div>
+       <canvas class="canvas1" id="canvas1"> </canvas>
+
+      <button class="restartGame" id="restartGame">Start Game</button>
+      <button class="hScoreResetBtn" id="hScoreResetBtn">
+        Reset High Score
+      </button>
+     
+    </div>
+
+    <script src="sprites.js"></script>
+    <script src="utlilities.js"></script>
+    <script src="eventListners.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
