@@ -11,13 +11,13 @@ function playerEnemyCollision() {
       playerHealth.innerHTML = health;
 
       if (health === 0) {
-        ctx.font = "30px Aerial";
+        ctx.font = "50px Bangers";
         ctx.fillStyle = "white";
         ctx.fillText("Game Over  ", canvas.width / 2, canvas.height / 2);
         ctx.fillText(
           "Move Player Press Up & Down Arrows and S to shoot Fire Bombs",
-          canvas.width / 2 - 380,
-          canvas.height / 2 + 40
+          canvas.width / 2 - 400,
+          canvas.height / 2 + 50
         );
         gameStartBtn.classList.add("btnActive");
         resetHighScoreBtn.classList.add("btnActive");
@@ -36,7 +36,7 @@ function playerPowerUpCollision() {
       powerUpsArray[i].pos.y <= player.pos.y + player.height
     ) {
       powerUpsArray.splice(i, 1);
-      ctx.font = "30px Aerial";
+      ctx.font = "30px  Bangers italic";
       ctx.fillStyle = "white";
       ctx.fillText("Game Over  ", canvas.width / 2, canvas.height / 2);
       ctx.fillText(

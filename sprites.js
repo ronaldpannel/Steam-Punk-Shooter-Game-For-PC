@@ -230,12 +230,14 @@ class Laser {
   }
 }
 function handleEnemies() {
-  if (frameRate % 50 === 0) {
+  if (frameRate % 30 === 0) {
     enemiesArray.push(
       new Enemy({
         pos: {
           x: canvas.width,
-          y: Math.random() * (canvas.height - 130 - 50) + 50,
+          //canvas.width = 1768;
+          // canvas.height = 550;
+          y: 10 + Math.random() * (350 - 10),
         },
         vel: {
           x: Math.floor(

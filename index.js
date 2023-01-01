@@ -9,7 +9,8 @@ const resetHighScoreBtn = document.getElementById("hScoreResetBtn");
 const playerHealth = document.getElementById("healthScore");
 canvas.width = 1768;
 canvas.height = 550;
-
+const myFont = new FontFace("myFont","url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');"
+);
 let enemiesArray = [];
 let lasersArray = [];
 let powerUpsArray = [];
