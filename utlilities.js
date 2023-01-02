@@ -10,6 +10,8 @@ function playerEnemyCollision() {
       health--;
       playerHealth.innerHTML = health;
 
+      handlePlayerExpParticle();
+
       if (health === 0) {
         ctx.font = "50px Bangers";
         ctx.fillStyle = "white";
@@ -36,7 +38,8 @@ function playerPowerUpCollision() {
       powerUpsArray[i].pos.y <= player.pos.y + player.height
     ) {
       powerUpsArray.splice(i, 1);
-      ctx.font = "30px  Bangers italic";
+
+      ctx.font = "30px  Bangers";
       ctx.fillStyle = "white";
       ctx.fillText("Game Over  ", canvas.width / 2, canvas.height / 2);
       ctx.fillText(
@@ -60,6 +63,25 @@ function laserEnemyCollision() {
           lasersArray[j].pos.y &&
         enemiesArray[i].pos.y <= lasersArray[j].pos.y + lasersArray[j].height
       ) {
+        
+         for(let v = 0; v <= 2; v++){
+           particlesEnemyArray.push(
+            new PlayerParticle({
+              pos: {
+                x: enemiesArray[i].pos.x,
+                y: enemiesArray[i].pos.y,
+              },
+              vel: {
+                x: (Math.random() + -0.5) * 10,
+                y: Math.random() + -5,
+              },
+              imageSrc: "gears.png",
+              frameX: Math.floor(Math.random() * 2),
+              frameY: Math.floor(Math.random() * 2),
+            })
+          );
+         }
+        
         enemiesArray.splice(i, 1);
         lasersArray.splice(j, 1);
         score += 10;

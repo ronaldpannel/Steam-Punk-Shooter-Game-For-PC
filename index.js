@@ -9,11 +9,15 @@ const resetHighScoreBtn = document.getElementById("hScoreResetBtn");
 const playerHealth = document.getElementById("healthScore");
 canvas.width = 1768;
 canvas.height = 550;
-const myFont = new FontFace("myFont","url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');"
+const myFont = new FontFace(
+  "myFont",
+  "url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');"
 );
 let enemiesArray = [];
 let lasersArray = [];
 let powerUpsArray = [];
+let particlesPlayerArray = [];
+let particlesEnemyArray = [];
 let frameRate = 0;
 let gameState = true;
 let gameSpeed = 1;
@@ -81,8 +85,8 @@ const player = new Player({
   width: 120,
   height: 190,
   color: "red",
-  imageSrc: 'player.png',
-  maxFrame: 37
+  imageSrc: "player.png",
+  maxFrame: 37,
 });
 
 function animate() {
@@ -91,6 +95,12 @@ function animate() {
   bgLayer1.update();
   bgLayer2.update();
   bgLayer3.update();
+  particlesPlayerArray.forEach((particle, index) => {
+    particle.update();
+    if (particle.pos.y >= canvas.height + 100) {
+      particlesPlayerArray.splice(index, 1);
+    }
+  });
   player.update();
   enemiesArray.forEach((enemy, index) => {
     enemy.update();
@@ -108,6 +118,12 @@ function animate() {
     powerUP.update();
     if (powerUP.pos.x <= -100) {
       powerUpsArray.splice(index, 1);
+    }
+  });
+  particlesEnemyArray.forEach((particle, index) => {
+    particle.update();
+    if (particle.pos.y >= canvas.height + 100) {
+      particlesEnemyArray.splice(index, 1);
     }
   });
   bgLayer4.update();
@@ -130,6 +146,10 @@ function animate() {
   frameRate++;
   if (gameState) {
     requestAnimationFrame(animate);
+
+    if (frameRate % 20 === 0) {
+      console.log(Math.random() * 2 + -1);
+    }
   }
 }
 animate();

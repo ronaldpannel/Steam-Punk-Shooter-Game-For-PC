@@ -229,6 +229,54 @@ class Laser {
     this.laserEdges();
   }
 }
+class PlayerParticle {
+  constructor({ pos, vel, imageSrc, frameX, frameY, MaxFrames }) {
+    this.pos = pos;
+    this.vel = vel;
+    this.width = 50;
+    this.height = 50;
+    this.gravity = 0.5;
+    this.frameX = frameX;
+    this.frameY = frameY;
+    this.angle = 0
+    this.aVel = Math.random() * 1 + -0.5;
+
+    this.image = new Image();
+    this.image.onload = () => {
+      this.loaded = true;
+    };
+    this.image.src = imageSrc;
+    this.loaded = false;
+  }
+  draw() {
+    ctx.save();
+    if (!this.loaded) return;
+    ctx.translate(this.pos.x + this.width/2, this.pos.y + this.height/2)
+    ctx.rotate(this.angle)
+    // ctx.fillStyle = 'yellow'
+    // ctx.fillRect(0, 0, this.width, this.height)
+    ctx.drawImage(
+      this.image,
+      this.frameX * this.width,
+      this.frameY * this.height,
+      this.width,
+      this.height,
+      0,
+      0,
+      this.width,
+      this.height
+    );
+    ctx.restore();
+  }
+  update() {
+    this.draw();
+    this.angle += this.aVel;
+    this.vel.y += this.gravity;
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+   
+  }
+}
 function handleEnemies() {
   if (frameRate % 30 === 0) {
     enemiesArray.push(
@@ -291,6 +339,43 @@ function handleLasers() {
         height: 30,
         color: "rgba(0, 255, 0, 0.5)",
         imageSrc: "ballLightning.png",
+      })
+    );
+  }
+}
+function handlePlayerExpParticle() {
+  particlesPlayerArray.push(
+    new PlayerParticle({
+      pos: {
+        x: player.pos.x,
+        y: player.pos.y + player.height / 2,
+      },
+      vel: {
+        x: (Math.random() + -0.5) * 10,
+        y: Math.random() + -5,
+      },
+      imageSrc: "gears.png",
+      frameX: Math.floor(Math.random() * 2),
+      frameY: Math.floor(Math.random() * 2),
+    })
+  );
+}
+
+function handleEnemyExpParticle() {
+  for (let i = 0; i <= 10; i++) {
+    particlesEnemyArray.push(
+      new PlayerParticle({
+        pos: {
+          x: player.pos.x,
+          y: player.pos.y,
+        },
+        vel: {
+          x: (Math.random() * -0.5) * 1,
+          y: (Math.random() * -5) + 1,
+        },
+        imageSrc: "gears.png",
+        frameX: Math.floor(Math.random() * 2),
+        frameY: Math.floor(Math.random() * 2),
       })
     );
   }
