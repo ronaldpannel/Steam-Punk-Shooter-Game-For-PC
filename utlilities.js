@@ -114,7 +114,7 @@ function laserPowerUpCollision() {
   }
 }
 //game Timer
-let timerValue = 40;
+let timerValue = 60;
 function decreaseTimer() {
   if (timerValue > 0) {
     setTimeout(decreaseTimer, 1000);
