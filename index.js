@@ -5,6 +5,7 @@ const ctx = canvas.getContext("2d");
 const scoreboard = document.getElementById("score");
 const highScoreboard = document.getElementById("highScore");
 const gameStartBtn = document.getElementById("restartGame");
+const credits = document.getElementById("credit");
 const resetHighScoreBtn = document.getElementById("hScoreResetBtn");
 const playerHealth = document.getElementById("healthScore");
 canvas.width = 1768;
@@ -132,9 +133,9 @@ function animate() {
 
   //player key inputs
   if (keys.arrowUp.pressed) {
-    player.vel.y = -gameSpeed * 8;
+    player.vel.y = -8;
   } else if (keys.arrowDown.pressed) {
-    player.vel.y = gameSpeed * 8;
+    player.vel.y = 8;
   } else {
     player.vel.y = 0;
   }
@@ -146,10 +147,15 @@ function animate() {
   frameRate++;
   if (gameState) {
     requestAnimationFrame(animate);
-
-    if (frameRate % 20 === 0) {
-      console.log(Math.random() * 2 + -1);
-    }
+  }
+  if(timerValue <= 30){
+    gameSpeed = 1.5
+  }
+  if(timerValue <= 20){
+    gameSpeed = 2
+  }
+  if(timerValue <= 10 ){
+    gameSpeed = 2.5
   }
 }
 animate();

@@ -42,6 +42,10 @@ body {
   font-size: 20px;
   color: white;
 }
+.timer {
+  font-size: 20px;
+  color: white;
+}
 .highScoreLabel {
   font-size: 20px;
   color: white;
@@ -63,6 +67,17 @@ button:hover {
   position: absolute;
   right: 10px;
   bottom: 20px;
+}
+.credit {
+  font-family: "arial";
+  font-size: 16px;
+  color: white;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  text-align: center;
+  bottom: 20px;
+  display: none;
 }
 .hScoreResetBtn {
   position: absolute;

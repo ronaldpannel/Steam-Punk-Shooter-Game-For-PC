@@ -238,8 +238,8 @@ class PlayerParticle {
     this.gravity = 0.5;
     this.frameX = frameX;
     this.frameY = frameY;
-    this.angle = 0
-    this.aVel = Math.random() * 1 + -0.5;
+    this.angle = 0;
+    this.aVel = Math.random() * .2  - 0.1;
 
     this.image = new Image();
     this.image.onload = () => {
@@ -247,24 +247,27 @@ class PlayerParticle {
     };
     this.image.src = imageSrc;
     this.loaded = false;
+    this.szeModifier = (Math.random() * 0.5 + 0.5).toFixed(1)
+    this.bounced = 0
+    this.bottomBounceBoundary = Math.random() * 100 + 60
   }
   draw() {
     ctx.save();
     if (!this.loaded) return;
-    ctx.translate(this.pos.x + this.width/2, this.pos.y + this.height/2)
+    ctx.translate(this.pos.x, this.pos.y)
     ctx.rotate(this.angle)
     // ctx.fillStyle = 'yellow'
-    // ctx.fillRect(0, 0, this.width, this.height)
+    // ctx.fillRect(0 - this.width * 0.5, 0 - this.height * 0.5, this.width, this.height)
     ctx.drawImage(
       this.image,
       this.frameX * this.width,
       this.frameY * this.height,
       this.width,
       this.height,
-      0,
-      0,
-      this.width,
-      this.height
+      0 - this.width * 0.5,
+      0 - this.height * 0.5,
+      this.width * this.szeModifier,
+      this.height * this.szeModifier
     );
     ctx.restore();
   }
@@ -272,13 +275,24 @@ class PlayerParticle {
     this.draw();
     this.angle += this.aVel;
     this.vel.y += this.gravity;
-    this.pos.x += this.vel.x;
+    this.pos.x += this.vel.x - gameSpeed;
     this.pos.y += this.vel.y;
-   
+
+    if(this.pos.y > canvas.height - this.bottomBounceBoundary && this.bounced < 2){
+      this.bounced++
+      this.vel.y *= -0.5
+    }
+  
   }
 }
 function handleEnemies() {
-  if (frameRate % 30 === 0) {
+  let enemyNumber = 30
+  if(timerValue < 20){
+    enemyNumber = 15
+  }else{
+    enemyNumber = 30
+  }
+  if (frameRate % enemyNumber === 0) {
     enemiesArray.push(
       new Enemy({
         pos: {
@@ -303,7 +317,14 @@ function handleEnemies() {
   }
 }
 function handlePowerUps() {
-  if (frameRate % 800 === 0) {
+  let powerUpNumber = 600
+  if(timerValue < 30){
+    powerUpNumber = 100
+  }else(
+    powerUpNumber = 600
+  )
+
+  if (frameRate % powerUpNumber === 0) {
     powerUpsArray.push(
       new PowerUp({
         pos: {
@@ -347,16 +368,16 @@ function handlePlayerExpParticle() {
   particlesPlayerArray.push(
     new PlayerParticle({
       pos: {
-        x: player.pos.x,
-        y: player.pos.y + player.height / 2,
+        x: player.pos.x + player.width * 0.5,
+        y: player.pos.y + player.height * 0.5,
       },
       vel: {
-        x: (Math.random() + -0.5) * 10,
-        y: Math.random() + -5,
+        x: Math.random()* 6 - 3,
+        y: Math.random()  * -15,
       },
       imageSrc: "gears.png",
-      frameX: Math.floor(Math.random() * 2),
-      frameY: Math.floor(Math.random() * 2),
+      frameX: Math.floor(Math.random() * 3),
+      frameY: Math.floor(Math.random() * 3),
     })
   );
 }
@@ -366,16 +387,16 @@ function handleEnemyExpParticle() {
     particlesEnemyArray.push(
       new PlayerParticle({
         pos: {
-          x: player.pos.x,
-          y: player.pos.y,
+          x: player.pos.x + player.width * 0.5,
+          y: player.pos.y + player.height * 0.5 ,
         },
         vel: {
           x: (Math.random() * -0.5) * 1,
           y: (Math.random() * -5) + 1,
         },
         imageSrc: "gears.png",
-        frameX: Math.floor(Math.random() * 2),
-        frameY: Math.floor(Math.random() * 2),
+        frameX: Math.floor(Math.random() * 3),
+        frameY: Math.floor(Math.random() * 3),
       })
     );
   }

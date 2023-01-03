@@ -1,10 +1,11 @@
 function playerEnemyCollision() {
   for (let i = 0; i < enemiesArray.length; i++) {
     if (
-      enemiesArray[i].pos.x <= player.pos.x + player.width &&
-      enemiesArray[i].pos.x >= player.pos.x + player.width - 5 &&
-      enemiesArray[i].pos.y + enemiesArray[i].height >= player.pos.y &&
-      enemiesArray[i].pos.y <= player.pos.y + player.height
+      (enemiesArray[i].pos.x <= player.pos.x + player.width &&
+        enemiesArray[i].pos.x >= player.pos.x + player.width - 5 &&
+        enemiesArray[i].pos.y + enemiesArray[i].height >= player.pos.y &&
+        enemiesArray[i].pos.y <= player.pos.y + player.height) ||
+      timerValue === 0
     ) {
       enemiesArray.splice(i, 1);
       health--;
@@ -15,14 +16,15 @@ function playerEnemyCollision() {
       if (health === 0) {
         ctx.font = "50px Bangers";
         ctx.fillStyle = "white";
-        ctx.fillText("Game Over  ", canvas.width / 2, canvas.height / 2);
+        ctx.fillText("Game Over  ", canvas.width / 2 - 30, canvas.height / 2);
         ctx.fillText(
           "Move Player Press Up & Down Arrows and S to shoot Fire Bombs",
           canvas.width / 2 - 400,
-          canvas.height / 2 + 50
+          canvas.height / 2 + 60
         );
         gameStartBtn.classList.add("btnActive");
         resetHighScoreBtn.classList.add("btnActive");
+        credits.classList.add("btnActive");
         gameState = false;
       }
     }
@@ -41,7 +43,7 @@ function playerPowerUpCollision() {
 
       ctx.font = "30px  Bangers";
       ctx.fillStyle = "white";
-      ctx.fillText("Game Over  ", canvas.width / 2, canvas.height / 2);
+      ctx.fillText("Game Over  ", canvas.width / 2 - 100, canvas.height / 2);
       ctx.fillText(
         "Move Player Press Up & Down Arrows and S to shoot Fire Bombs",
         canvas.width / 2 - 380,
@@ -49,6 +51,7 @@ function playerPowerUpCollision() {
       );
       gameStartBtn.classList.add("btnActive");
       resetHighScoreBtn.classList.add("btnActive");
+      credits.classList.add("credit");
       gameState = false;
     }
   }
@@ -64,8 +67,8 @@ function laserEnemyCollision() {
         enemiesArray[i].pos.y <= lasersArray[j].pos.y + lasersArray[j].height
       ) {
         
-         for(let v = 0; v <= 2; v++){
-           particlesEnemyArray.push(
+        for (let v = 0; v <= 5; v++) {
+          particlesEnemyArray.push(
             new PlayerParticle({
               pos: {
                 x: enemiesArray[i].pos.x,
@@ -80,8 +83,8 @@ function laserEnemyCollision() {
               frameY: Math.floor(Math.random() * 2),
             })
           );
-         }
-        
+        }
+
         enemiesArray.splice(i, 1);
         lasersArray.splice(j, 1);
         score += 10;
@@ -110,6 +113,16 @@ function laserPowerUpCollision() {
     }
   }
 }
+//game Timer
+let timerValue = 40;
+function decreaseTimer() {
+  if (timerValue > 0) {
+    setTimeout(decreaseTimer, 1000);
+    timerValue--;
+    document.getElementById("time").innerHTML = timerValue;
+  }
+}
+decreaseTimer();
 
 //set highest score
 function setHighestScore() {
