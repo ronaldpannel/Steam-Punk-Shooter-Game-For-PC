@@ -10,7 +10,7 @@ function playerEnemyCollision() {
       enemiesArray.splice(i, 1);
       health--;
       playerHealth.innerHTML = health;
-      if (health < 1) {
+      if (health < 1 && timerValue > +1) {
         playerExpSound.play();
       }
 
@@ -110,7 +110,7 @@ function laserPowerUpCollision() {
         powerUpsArray[i].pos.y <= lasersArray[j].pos.y + lasersArray[j].height
       ) {
         luckySound.play();
-        luckySound.volume = 0.5;
+        luckySound.volume = 0.1;
         powerUpsArray.splice(i, 1);
         lasersArray.splice(j, 1);
         score += 100;
@@ -129,7 +129,7 @@ function decreaseTimer() {
     timerValue--;
     document.getElementById("time").innerHTML = timerValue;
   }
-  if (timerValue < 1) clapping.play();
+  if (timerValue == 0 && health >= 1) clapping.play();
 }
 decreaseTimer();
 

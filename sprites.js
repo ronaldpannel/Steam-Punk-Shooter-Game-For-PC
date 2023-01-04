@@ -319,10 +319,10 @@ function handleEnemies() {
   }
 }
 function handlePowerUps() {
-  let powerUpNumber = 600;
+  let powerUpNumber = 800;
   if (timerValue < 30) {
-    powerUpNumber = 100;
-  } else powerUpNumber = 600;
+    powerUpNumber = 600;
+  } else powerUpNumber = 800;
 
   if (frameRate % powerUpNumber === 0) {
     powerUpsArray.push(
