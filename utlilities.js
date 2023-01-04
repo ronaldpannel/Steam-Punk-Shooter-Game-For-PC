@@ -70,8 +70,6 @@ function laserEnemyCollision() {
           lasersArray[j].pos.y &&
         enemiesArray[i].pos.y <= lasersArray[j].pos.y + lasersArray[j].height
       ) {
-        expSound.play();
-        expSound.volume = 0.1;
         for (let v = 0; v <= 5; v++) {
           particlesEnemyArray.push(
             new PlayerParticle({
@@ -95,6 +93,8 @@ function laserEnemyCollision() {
 
         score += 10;
         scoreboard.innerHTML = score;
+        expSound.play();
+        expSound.volume = 0.1;
       }
     }
   }
@@ -109,14 +109,14 @@ function laserPowerUpCollision() {
           lasersArray[j].pos.y &&
         powerUpsArray[i].pos.y <= lasersArray[j].pos.y + lasersArray[j].height
       ) {
+        luckySound.play();
+        luckySound.volume = 0.5;
         powerUpsArray.splice(i, 1);
         lasersArray.splice(j, 1);
         score += 100;
         scoreboard.innerHTML = score;
         health = 6;
         playerHealth.innerHTML = health;
-        luckySound.play();
-        luckySound.volume = 0.5;
       }
     }
   }
@@ -129,6 +129,7 @@ function decreaseTimer() {
     timerValue--;
     document.getElementById("time").innerHTML = timerValue;
   }
+  if (timerValue < 1) clapping.play();
 }
 decreaseTimer();
 

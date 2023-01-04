@@ -13,6 +13,7 @@ let laserSound = document.getElementById("laserSound");
 let expSound = document.getElementById("expSound");
 let playerExpSound = document.getElementById("playerExpSound");
 let luckySound = document.getElementById("luckySound");
+let clapping = document.getElementById("clapping");
 
 canvas.width = 1768;
 canvas.height = 550;
@@ -117,7 +118,7 @@ function animate() {
   });
   lasersArray.forEach((laser, index) => {
     laser.update();
-    if (laser.pos.x + laser.vel.x >= canvas.width - 400) {
+    if (laser.pos.x + laser.vel.x >= canvas.width - 100) {
       lasersArray.splice(index, 1);
     }
   });
