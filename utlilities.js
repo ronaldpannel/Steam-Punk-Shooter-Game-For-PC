@@ -10,6 +10,9 @@ function playerEnemyCollision() {
       enemiesArray.splice(i, 1);
       health--;
       playerHealth.innerHTML = health;
+      if (health < 1) {
+        playerExpSound.play();
+      }
 
       handlePlayerExpParticle();
 
@@ -39,6 +42,7 @@ function playerPowerUpCollision() {
       powerUpsArray[i].pos.y + powerUpsArray[i].height >= player.pos.y &&
       powerUpsArray[i].pos.y <= player.pos.y + player.height
     ) {
+      playerExpSound.play();
       powerUpsArray.splice(i, 1);
 
       ctx.font = "30px  Bangers";
@@ -51,7 +55,7 @@ function playerPowerUpCollision() {
       );
       gameStartBtn.classList.add("btnActive");
       resetHighScoreBtn.classList.add("btnActive");
-      credits.classList.add("credit");
+      credits.classList.add("btnActive");
       gameState = false;
     }
   }
@@ -66,7 +70,8 @@ function laserEnemyCollision() {
           lasersArray[j].pos.y &&
         enemiesArray[i].pos.y <= lasersArray[j].pos.y + lasersArray[j].height
       ) {
-        
+        expSound.play();
+        expSound.volume = 0.1;
         for (let v = 0; v <= 5; v++) {
           particlesEnemyArray.push(
             new PlayerParticle({
@@ -87,6 +92,7 @@ function laserEnemyCollision() {
 
         enemiesArray.splice(i, 1);
         lasersArray.splice(j, 1);
+
         score += 10;
         scoreboard.innerHTML = score;
       }
@@ -109,6 +115,8 @@ function laserPowerUpCollision() {
         scoreboard.innerHTML = score;
         health = 6;
         playerHealth.innerHTML = health;
+        luckySound.play();
+        luckySound.volume = 0.5;
       }
     }
   }

@@ -8,6 +8,12 @@ const gameStartBtn = document.getElementById("restartGame");
 const credits = document.getElementById("credit");
 const resetHighScoreBtn = document.getElementById("hScoreResetBtn");
 const playerHealth = document.getElementById("healthScore");
+
+let laserSound = document.getElementById("laserSound");
+let expSound = document.getElementById("expSound");
+let playerExpSound = document.getElementById("playerExpSound");
+let luckySound = document.getElementById("luckySound");
+
 canvas.width = 1768;
 canvas.height = 550;
 const myFont = new FontFace(
@@ -111,7 +117,7 @@ function animate() {
   });
   lasersArray.forEach((laser, index) => {
     laser.update();
-    if (laser.pos.x >= canvas.width + 100) {
+    if (laser.pos.x + laser.vel.x >= canvas.width - 400) {
       lasersArray.splice(index, 1);
     }
   });
@@ -148,14 +154,14 @@ function animate() {
   if (gameState) {
     requestAnimationFrame(animate);
   }
-  if(timerValue <= 30){
-    gameSpeed = 1.5
+  if (timerValue <= 30) {
+    gameSpeed = 1.5;
   }
-  if(timerValue <= 20){
-    gameSpeed = 2
+  if (timerValue <= 20) {
+    gameSpeed = 2;
   }
-  if(timerValue <= 10 ){
-    gameSpeed = 2.5
+  if (timerValue <= 10) {
+    gameSpeed = 2.5;
   }
 }
 animate();

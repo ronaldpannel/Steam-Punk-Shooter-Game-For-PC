@@ -11,6 +11,10 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "s") {
     lasersArray.lastKey === "s";
     keys.s.pressed = true;
+    if(gameState){
+    laserSound.play()
+    laserSound.volume = 0.05
+    }
     handleLasers();
   }
 });

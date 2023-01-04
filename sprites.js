@@ -239,7 +239,7 @@ class PlayerParticle {
     this.frameX = frameX;
     this.frameY = frameY;
     this.angle = 0;
-    this.aVel = Math.random() * .2  - 0.1;
+    this.aVel = Math.random() * 0.2 - 0.1;
 
     this.image = new Image();
     this.image.onload = () => {
@@ -247,15 +247,15 @@ class PlayerParticle {
     };
     this.image.src = imageSrc;
     this.loaded = false;
-    this.szeModifier = (Math.random() * 0.5 + 0.5).toFixed(1)
-    this.bounced = 0
-    this.bottomBounceBoundary = Math.random() * 100 + 60
+    this.szeModifier = (Math.random() * 0.5 + 0.5).toFixed(1);
+    this.bounced = 0;
+    this.bottomBounceBoundary = Math.random() * 100 + 60;
   }
   draw() {
     ctx.save();
     if (!this.loaded) return;
-    ctx.translate(this.pos.x, this.pos.y)
-    ctx.rotate(this.angle)
+    ctx.translate(this.pos.x, this.pos.y);
+    ctx.rotate(this.angle);
     // ctx.fillStyle = 'yellow'
     // ctx.fillRect(0 - this.width * 0.5, 0 - this.height * 0.5, this.width, this.height)
     ctx.drawImage(
@@ -278,19 +278,21 @@ class PlayerParticle {
     this.pos.x += this.vel.x - gameSpeed;
     this.pos.y += this.vel.y;
 
-    if(this.pos.y > canvas.height - this.bottomBounceBoundary && this.bounced < 2){
-      this.bounced++
-      this.vel.y *= -0.5
+    if (
+      this.pos.y > canvas.height - this.bottomBounceBoundary &&
+      this.bounced < 2
+    ) {
+      this.bounced++;
+      this.vel.y *= -0.5;
     }
-  
   }
 }
 function handleEnemies() {
-  let enemyNumber = 30
-  if(timerValue < 20){
-    enemyNumber = 15
-  }else{
-    enemyNumber = 30
+  let enemyNumber = 30;
+  if (timerValue < 20) {
+    enemyNumber = 15;
+  } else {
+    enemyNumber = 30;
   }
   if (frameRate % enemyNumber === 0) {
     enemiesArray.push(
@@ -317,12 +319,10 @@ function handleEnemies() {
   }
 }
 function handlePowerUps() {
-  let powerUpNumber = 600
-  if(timerValue < 30){
-    powerUpNumber = 100
-  }else(
-    powerUpNumber = 600
-  )
+  let powerUpNumber = 600;
+  if (timerValue < 30) {
+    powerUpNumber = 100;
+  } else powerUpNumber = 600;
 
   if (frameRate % powerUpNumber === 0) {
     powerUpsArray.push(
@@ -372,8 +372,8 @@ function handlePlayerExpParticle() {
         y: player.pos.y + player.height * 0.5,
       },
       vel: {
-        x: Math.random()* 6 - 3,
-        y: Math.random()  * -15,
+        x: Math.random() * 6 - 3,
+        y: Math.random() * -15,
       },
       imageSrc: "gears.png",
       frameX: Math.floor(Math.random() * 3),
@@ -388,11 +388,11 @@ function handleEnemyExpParticle() {
       new PlayerParticle({
         pos: {
           x: player.pos.x + player.width * 0.5,
-          y: player.pos.y + player.height * 0.5 ,
+          y: player.pos.y + player.height * 0.5,
         },
         vel: {
-          x: (Math.random() * -0.5) * 1,
-          y: (Math.random() * -5) + 1,
+          x: Math.random() * -0.5 * 1,
+          y: Math.random() * -5 + 1,
         },
         imageSrc: "gears.png",
         frameX: Math.floor(Math.random() * 3),
