@@ -24,6 +24,7 @@ const myFont = new FontFace(
 let enemiesArray = [];
 let lasersArray = [];
 let powerUpsArray = [];
+let killerFishArray = [];
 let particlesPlayerArray = [];
 let particlesEnemyArray = [];
 let frameRate = 0;
@@ -134,9 +135,16 @@ function animate() {
       particlesEnemyArray.splice(index, 1);
     }
   });
+  killerFishArray.forEach((killerFish, index) => {
+    killerFish.update();
+    if (killerFish.pos.x <= -100) {
+      killerFishArray.splice(index, 1);
+    }
+  });
   bgLayer4.update();
   handleEnemies();
   handlePowerUps();
+  handleKillerFish();
 
   //player key inputs
   if (keys.arrowUp.pressed) {
@@ -150,6 +158,8 @@ function animate() {
   laserEnemyCollision();
   laserPowerUpCollision();
   playerPowerUpCollision();
+  playerKillerFishCollision();
+  laserKillerFishCollision();
 
   frameRate++;
   if (gameState) {

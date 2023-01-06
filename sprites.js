@@ -287,6 +287,59 @@ class PlayerParticle {
     }
   }
 }
+class KillerFish {
+  constructor({ pos, vel = 0, width, height, color, imageSrc, maxFrame }) {
+    this.pos = pos;
+    this.vel = vel;
+    this.width = width;
+    this.height = height;
+    this.color = color;
+    this.image = new Image();
+    this.image.onload = () => {
+      this.loaded = true;
+    };
+    this.image.src = imageSrc;
+    this.loaded = false;
+    this.frameX = 0;
+    if (Math.random() > 0.5) {
+      this.frameY = 0;
+    } else {
+      this.frameY = 1;
+    }
+    this.maxFrame = maxFrame;
+  }
+  draw() {
+    // ctx.fillStyle = this.color;
+    // ctx.fillRect(this.pos.x, this.pos.y + 12, this.width, this.height - 20);
+    if (!this.loaded) return;
+    ctx.drawImage(
+      this.image,
+      this.frameX * this.width,
+      this.frameY * this.height,
+      this.width,
+      this.height,
+      this.pos.x,
+      this.pos.y,
+      this.width,
+      this.height
+    );
+  }
+  animateSprite() {
+    if (this.frameX < this.maxFrame) {
+      this.frameX++;
+    } else {
+      this.frameX = 0;
+    }
+  }
+  powerUpEdges() {
+    this.pos.x += this.vel.x;
+  }
+  update() {
+    this.draw();
+    this.animateSprite();
+    this.powerUpEdges();
+  }
+}
 function handleEnemies() {
   let enemyNumber = 30;
   if (timerValue < 20) {
@@ -319,10 +372,10 @@ function handleEnemies() {
   }
 }
 function handlePowerUps() {
-  let powerUpNumber = 800;
+  let powerUpNumber = 600;
   if (timerValue < 30) {
-    powerUpNumber = 600;
-  } else powerUpNumber = 800;
+    powerUpNumber = 300;
+  } else powerUpNumber = 600;
 
   if (frameRate % powerUpNumber === 0) {
     powerUpsArray.push(
@@ -401,6 +454,32 @@ function handleEnemyExpParticle() {
         imageSrc: "gears.png",
         frameX: Math.floor(Math.random() * 3),
         frameY: Math.floor(Math.random() * 3),
+      })
+    );
+  }
+}
+function handleKillerFish() {
+  let killerNumber = 600;
+  if (timerValue < 30) {
+    killerNumber = 300;
+  } else killerNumber = 600;
+
+  if (frameRate % killerNumber === 0) {
+    killerFishArray.push(
+      new KillerFish({
+        pos: {
+          x: canvas.width,
+          y: Math.random() * (canvas.height - 130 - 50) + 50,
+        },
+        vel: {
+          x: -gameSpeed * 4,
+          y: 0,
+        },
+        width: 115,
+        height: 95,
+        color: "red",
+        imageSrc: "drone.png",
+        maxFrame: 38,
       })
     );
   }

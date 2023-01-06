@@ -42,7 +42,8 @@ function playerPowerUpCollision() {
       powerUpsArray[i].pos.y + powerUpsArray[i].height >= player.pos.y &&
       powerUpsArray[i].pos.y <= player.pos.y + player.height
     ) {
-      playerExpSound.play();
+      luckySound.play();
+      luckySound.volume = 0.1;
       powerUpsArray.splice(i, 1);
 
       ctx.font = "30px  Bangers";
@@ -53,10 +54,8 @@ function playerPowerUpCollision() {
         canvas.width / 2 - 380,
         canvas.height / 2 + 40
       );
-      gameStartBtn.classList.add("btnActive");
-      resetHighScoreBtn.classList.add("btnActive");
-      credits.classList.add("btnActive");
-      gameState = false;
+      health = 6;
+      playerHealth.innerHTML = health;
     }
   }
 }
@@ -87,7 +86,6 @@ function laserEnemyCollision() {
             })
           );
         }
-
         enemiesArray.splice(i, 1);
         lasersArray.splice(j, 1);
 
@@ -115,12 +113,58 @@ function laserPowerUpCollision() {
         lasersArray.splice(j, 1);
         score += 100;
         scoreboard.innerHTML = score;
-        health = 6;
-        playerHealth.innerHTML = health;
       }
     }
   }
 }
+function playerKillerFishCollision() {
+  for (let i = 0; i < killerFishArray.length; i++) {
+    if (
+      killerFishArray[i].pos.x <= player.pos.x + player.width &&
+      killerFishArray[i].pos.x >= player.pos.x + player.width - 5 &&
+      killerFishArray[i].pos.y + killerFishArray[i].height >= player.pos.y &&
+      killerFishArray[i].pos.y <= player.pos.y + player.height
+    ) {
+      playerExpSound.play();
+      killerFishArray.splice(i, 1);
+
+      ctx.font = "30px  Bangers";
+      ctx.fillStyle = "white";
+      ctx.fillText("Game Over  ", canvas.width / 2 - 100, canvas.height / 2);
+      ctx.fillText(
+        "Move Player Press Up & Down Arrows and S to shoot Fire Bombs",
+        canvas.width / 2 - 380,
+        canvas.height / 2 + 40
+      );
+      gameStartBtn.classList.add("btnActive");
+      resetHighScoreBtn.classList.add("btnActive");
+      credits.classList.add("btnActive");
+      gameState = false;
+    }
+  }
+}
+function laserKillerFishCollision() {
+  for (let i = killerFishArray.length - 1; i >= 0; i--) {
+    for (let j = lasersArray.length - 1; j >= 0; j--) {
+      if (
+        killerFishArray[i].pos.x <=
+          lasersArray[j].pos.x + lasersArray[j].width &&
+        killerFishArray[i].pos.x >= lasersArray[j].pos.x &&
+        killerFishArray[i].pos.y + killerFishArray[i].height >=
+          lasersArray[j].pos.y &&
+        killerFishArray[i].pos.y <= lasersArray[j].pos.y + lasersArray[j].height
+      ) {
+        expSound.play();
+        expSound.volume = 0.1;
+        killerFishArray.splice(i, 1);
+        lasersArray.splice(j, 1);
+        score -= 50;
+        scoreboard.innerHTML = score;
+      }
+    }
+  }
+}
+
 //game Timer
 let timerValue = 60;
 function decreaseTimer() {
