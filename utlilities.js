@@ -10,7 +10,7 @@ function playerEnemyCollision() {
       enemiesArray.splice(i, 1);
       health--;
       playerHealth.innerHTML = health;
-      if (health < 1 && timerValue > +1) {
+      if (health < 1 && timerValue >= 1) {
         playerExpSound.play();
       }
 
