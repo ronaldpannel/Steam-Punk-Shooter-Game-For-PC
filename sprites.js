@@ -341,11 +341,11 @@ class KillerFish {
   }
 }
 function handleEnemies() {
-  let enemyNumber = 30;
+  let enemyNumber = 60;
   if (timerValue < 20) {
-    enemyNumber = 15;
-  } else {
     enemyNumber = 30;
+  } else {
+    enemyNumber = 60;
   }
   if (frameRate % enemyNumber === 0) {
     enemiesArray.push(
